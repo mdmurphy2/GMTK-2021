@@ -8,6 +8,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] SpriteRenderer spriteRenderer;
     public float leftX;
     public float rightX;
+    public float upY;
+    public float downY;
     public float speed = 1.0f;
 
     public int maxHealth = 5;
@@ -18,8 +20,8 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         currentHealth = maxHealth;
-        pos1 = new Vector3(transform.position.x - leftX, transform.position.y, transform.position.z);
-        pos2 = new Vector3(transform.position.x + rightX, transform.position.y, transform.position.z);
+        pos1 = new Vector3(transform.position.x - leftX, transform.position.y - downY, transform.position.z);
+        pos2 = new Vector3(transform.position.x + rightX, transform.position.y + upY, transform.position.z);
 
     }
 

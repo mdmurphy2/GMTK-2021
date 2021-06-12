@@ -71,7 +71,7 @@ public class PlayerController : MonoBehaviour
     public LayerMask enemyLayer;
     private bool attack;
     private bool canAttack = true;
-    private float attackDelay = .3f;
+    public float attackDelay = .2f;
     private float attackTimer = 0f;
 
     // Start is called before the first frame update
@@ -187,7 +187,7 @@ public class PlayerController : MonoBehaviour
                 if(jumpFromAttack) {
                     jumpFromAttack = false;
                     rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, 0f);
-                    rigidbody2D.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+                    rigidbody2D.AddForce(new Vector2(0, jumpForce * 1.1f), ForceMode2D.Impulse);
                 }
             }
             
