@@ -48,11 +48,13 @@ public class PlayerController : MonoBehaviour
 
 
     public Transform rightAttackPoint;
-    public float rightAttackRange = .5f;
+    public Transform downAttackPoint;
+
+    public float attackRange = .5f;
     public LayerMask enemyLayer;
     private bool attack;
     private bool canAttack = true;
-    private float attackDelay = 2f;
+    private float attackDelay = 1f;
     private float attackTimer = 0f;
 
     // Start is called before the first frame update
@@ -74,6 +76,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        //Find Direction of Attack
         MoveHorizontal();
         //ApplyGravity();
         ApplyDash();
@@ -129,18 +132,50 @@ public class PlayerController : MonoBehaviour
         if(rightAttackPoint == null) {
             return;
         }
-        Gizmos.DrawWireSphere(rightAttackPoint.position, rightAttackRange);    
+        Gizmos.DrawWireSphere(rightAttackPoint.position, attackRange);    
+        Gizmos.DrawWireSphere(downAttackPoint.position, attackRange);    
+
     }
 
     private void ApplyAttack() {
         if(attack) {
             attack = false;
+            //Find Direction of Attack
+            float horizontal = Input.GetAxisRaw("Horizontal");
+            float vertical = Input.GetAxisRaw("Vertical");
 
-            Collider2D[] hits = Physics2D.OverlapCircleAll(rightAttackPoint.position, rightAttackRange, enemyLayer);
-            Debug.Log(hits);
+            Vector2 force = Vector2.zero;
+
+            Collider2D[] hits = new Collider2D[0];
+           
+             if(Mathf.Abs(vertical) > 0) { //Up Or Down
+                if(vertical < 0) {
+                    hits = Physics2D.OverlapCircleAll(downAttackPoint.position, attackRange, enemyLayer);
+                    Debug.Log("Attack Down");
+                    force = new Vector2(0f, jumpForce);
+                } else if(vertical > 0) {
+                    //hits = Physics2D.OverlapCircleAll(downAttackPoint.position, attackRange, enemyLayer);
+                    Debug.Log("Attack Up");
+                }
+            
+            }  else { //Left Or Right
+                if(horizontal < 0) {
+                    Debug.Log("Attack Left");
+                } else { //If not moving attack right
+                    hits = Physics2D.OverlapCircleAll(rightAttackPoint.position, attackRange, enemyLayer);
+                    Debug.Log("Attack right");
+                }
+                
+            }
+
+
 
             foreach(Collider2D enemy in hits) {
                 enemy.GetComponent<Enemy>().TakeDamage(1);
+                if(force != Vector2.zero) {
+                    rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, 0f);
+                    rigidbody2D.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+                }
             }
         }
     }

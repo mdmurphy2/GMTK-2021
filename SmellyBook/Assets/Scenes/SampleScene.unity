@@ -123,36 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &261421278
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 261421279}
-  m_Layer: 0
-  m_Name: AttackPoint
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &261421279
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 261421278}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.46, y: -1.04, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 2128852312}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -311,6 +281,36 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 69c26d41dace8344aa175a5fe19d6f05, type: 3}
+--- !u!1 &1597309834
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1597309835}
+  m_Layer: 0
+  m_Name: DownAttackPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1597309835
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1597309834}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.14, y: -3.36, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2128852312}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1708329674
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -318,9 +318,13 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1333288476, guid: 9ebd9239cd876e54c9054bf777915c28, type: 3}
-      propertyPath: m_Enabled
-      value: 0
+    - target: {fileID: 261421278, guid: 9ebd9239cd876e54c9054bf777915c28, type: 3}
+      propertyPath: m_Name
+      value: RightAttackPoint
+      objectReference: {fileID: 0}
+    - target: {fileID: 261421279, guid: 9ebd9239cd876e54c9054bf777915c28, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.88
       objectReference: {fileID: 0}
     - target: {fileID: 1771794197782795955, guid: 9ebd9239cd876e54c9054bf777915c28, type: 3}
       propertyPath: m_RootOrder
@@ -366,34 +370,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1771794197782795957, guid: 9ebd9239cd876e54c9054bf777915c28, type: 3}
-      propertyPath: m_CollisionDetection
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1771794197782795958, guid: 9ebd9239cd876e54c9054bf777915c28, type: 3}
-      propertyPath: speed
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 1771794197782795958, guid: 9ebd9239cd876e54c9054bf777915c28, type: 3}
-      propertyPath: jumpForce
-      value: 45
+      propertyPath: attackRange
+      value: 1.42
       objectReference: {fileID: 0}
     - target: {fileID: 1771794197782795958, guid: 9ebd9239cd876e54c9054bf777915c28, type: 3}
       propertyPath: cameraManager
       value: 
       objectReference: {fileID: 519420030}
     - target: {fileID: 1771794197782795958, guid: 9ebd9239cd876e54c9054bf777915c28, type: 3}
-      propertyPath: rightAttackPoint
+      propertyPath: downAttackPoint
       value: 
-      objectReference: {fileID: 261421279}
-    - target: {fileID: 1771794197782795958, guid: 9ebd9239cd876e54c9054bf777915c28, type: 3}
-      propertyPath: rightAttackRange
-      value: 1.37
-      objectReference: {fileID: 0}
-    - target: {fileID: 1771794197782795958, guid: 9ebd9239cd876e54c9054bf777915c28, type: 3}
-      propertyPath: enemyLayer.m_Bits
-      value: 128
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1597309835}
     - target: {fileID: 1771794197782795959, guid: 9ebd9239cd876e54c9054bf777915c28, type: 3}
       propertyPath: m_Name
       value: Player
