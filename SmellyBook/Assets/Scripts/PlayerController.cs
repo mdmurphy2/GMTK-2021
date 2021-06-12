@@ -75,6 +75,8 @@ public class PlayerController : MonoBehaviour
     public float attackDelay = .2f;
     private float attackTimer = 0f;
 
+    private bool isGrounded;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -175,7 +177,7 @@ public class PlayerController : MonoBehaviour
              if(!IsGrounded()) { //Up Or Down
                     hits = Physics2D.OverlapCircleAll(downAttackPoint.position, attackRange, enemyLayer);
                     Debug.Log("Attack Down");
-                    animator.SetTrigger("swingRight");
+                    animator.SetTrigger("swingDown");
                     jumpFromAttack = true;
             }  else { //Left Or Right
                 if(horizontal < 0) {
@@ -327,6 +329,9 @@ public class PlayerController : MonoBehaviour
             if ((IsGrounded() && Mathf.Approximately(rigidbody2D.velocity.y, 0f)) || canCoyoteJump)
             {
                 Debug.Log("JUMP1");
+                if(Stats.CurrentCharacter == Character.Samurai) {
+                    animator.SetTrigger("startJumpSamurai");
+                }
                 rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, 0f);
                 rigidbody2D.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
                 canJump = false;
