@@ -215,12 +215,12 @@ MonoBehaviour:
   dashSpeed: 90
   dashTiming: 0.25
   dashStartup: 0.1
-  characterSwapDelay: 0.2
+  characterSwapDelay: 0.1
   coyoteTime: 0.2
   coyoteTimer: 0
   rightAttackPoint: {fileID: 261421279}
   downAttackPoint: {fileID: 1597309835}
-  attackRange: 1.9
+  attackRange: 2.78
   enemyLayer:
     serializedVersion: 2
     m_Bits: 128

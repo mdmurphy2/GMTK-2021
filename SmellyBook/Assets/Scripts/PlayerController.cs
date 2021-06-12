@@ -108,6 +108,7 @@ public class PlayerController : MonoBehaviour
     private void MoveHorizontal()
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
+        animator.SetFloat("horizontalMovement", Mathf.Abs(horizontal));
         if(horizontal < -0.1f) {
             this.gameObject.transform.localScale = new Vector3(-1,1,1);
         } else if (horizontal > .1f) {
@@ -260,6 +261,7 @@ public class PlayerController : MonoBehaviour
 
             if(Input.GetButton("Fire1") && canDash) {
                 Debug.Log("DASH");
+                animator.SetTrigger("dash");
                 canSwapCharacters = false;
                 timeSinceLastSwap = 0f;
                 
