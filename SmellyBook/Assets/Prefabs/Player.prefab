@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &261421278
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 261421279}
+  m_Layer: 0
+  m_Name: AttackPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &261421279
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 261421278}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.46, y: -1.04, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1771794197782795955}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1771794197782795959
 GameObject:
   m_ObjectHideFlags: 0
@@ -31,7 +61,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -6.08, y: -1.66, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 261421279}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -106,7 +137,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!70 &1771794197782795954
 CapsuleCollider2D:
@@ -139,18 +170,24 @@ MonoBehaviour:
   rigidbody2D: {fileID: 1771794197782795957}
   capsuleCollider2D: {fileID: 1771794197782795954}
   spriteRenderer: {fileID: 1771794197782795956}
+  cameraManager: {fileID: 0}
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
   maxSpeed: 10
-  speed: 18
-  jumpForce: 31.51
+  speed: 30
+  jumpForce: 45
   dashSpeed: 90
   dashTiming: 0.25
   dashStartup: 0.1
   characterSwapDelay: 5
   coyoteTime: 0.2
   coyoteTimer: 0
+  rightAttackPoint: {fileID: 261421279}
+  rightAttackRange: 1.37
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!61 &1333288476
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -158,7 +195,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1771794197782795959}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 6200000, guid: 2deec8390a123df479aafbb43a9305bd, type: 2}
   m_IsTrigger: 0

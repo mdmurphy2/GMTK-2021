@@ -46,6 +46,15 @@ public class PlayerController : MonoBehaviour
         Samurai,
     }
 
+
+    public Transform rightAttackPoint;
+    public float rightAttackRange = .5f;
+    public LayerMask enemyLayer;
+    private bool attack;
+    private bool canAttack = true;
+    private float attackDelay = 2f;
+    private float attackTimer = 0f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -58,6 +67,7 @@ public class PlayerController : MonoBehaviour
         SwitchCharacters();
         CheckJump();
         CheckDash();
+        CheckAttack();
 
     }
 
@@ -67,6 +77,7 @@ public class PlayerController : MonoBehaviour
         MoveHorizontal();
         //ApplyGravity();
         ApplyDash();
+        ApplyAttack();
     }
 
     private void MoveHorizontal()
@@ -92,6 +103,47 @@ public class PlayerController : MonoBehaviour
     /*private float CalculateGravity() {
         return gravity * Time.fixedDeltaTime;
     }*/
+    
+    private void CheckAttack() {
+        if(!canAttack) {
+            attackTimer += Time.deltaTime;
+            if(attackTimer > attackDelay) {
+                canAttack = true;
+            }
+        }
+
+        if(currentCharacter == Character.Samurai) {
+            if(Input.GetButtonDown("Fire1")) {
+                if(canAttack) {
+                    Debug.Log("attacking");
+                    canAttack = false;
+                    attack = true;
+                    attackTimer = 0f;
+                }
+            }
+        }
+        
+    }
+
+    private void OnDrawGizmosSelected() {
+        if(rightAttackPoint == null) {
+            return;
+        }
+        Gizmos.DrawWireSphere(rightAttackPoint.position, rightAttackRange);    
+    }
+
+    private void ApplyAttack() {
+        if(attack) {
+            attack = false;
+
+            Collider2D[] hits = Physics2D.OverlapCircleAll(rightAttackPoint.position, rightAttackRange, enemyLayer);
+            Debug.Log(hits);
+
+            foreach(Collider2D enemy in hits) {
+                enemy.GetComponent<Enemy>().TakeDamage(1);
+            }
+        }
+    }
 
     private void SwitchCharacters()
     {
