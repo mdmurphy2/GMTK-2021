@@ -371,7 +371,7 @@ public class PlayerController : MonoBehaviour
     public void Die() 
     {
         //Do some fadiing
-        Stats.DeathCounter = Stats.DeathCounter++;
+        Stats.DeathCounter = Stats.DeathCounter + 1;
         //Do Death Stuff
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         
