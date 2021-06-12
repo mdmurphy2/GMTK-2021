@@ -195,12 +195,12 @@ public class PlayerController : MonoBehaviour
             if (currentCharacter == Character.Ninja)
             {
                 currentCharacter = Character.Samurai;
-                //spriteRenderer.color = Color.red;
+                spriteRenderer.color = Color.white;
             }
             else
             {
                 currentCharacter = Character.Ninja;
-                //spriteRenderer.color = Color.black;
+                spriteRenderer.color = Color.black;
             }
         }
 
