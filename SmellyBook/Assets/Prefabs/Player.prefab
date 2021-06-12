@@ -136,6 +136,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rigidbody2D: {fileID: 1771794197782795957}
+  capsuleCollider2D: {fileID: 1771794197782795954}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
   maxSpeed: 10
   speed: 18
-  jumpForce: 30
+  jumpForce: 31.51

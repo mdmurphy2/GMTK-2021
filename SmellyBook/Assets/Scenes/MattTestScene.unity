@@ -222,7 +222,7 @@ GameObject:
   - component: {fileID: 2126335475}
   - component: {fileID: 2126335474}
   - component: {fileID: 2126335473}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -376,6 +376,10 @@ PrefabInstance:
       propertyPath: capsuleCollider2D
       value: 
       objectReference: {fileID: 463300909}
+    - target: {fileID: 1771794197782795958, guid: 9ebd9239cd876e54c9054bf777915c28, type: 3}
+      propertyPath: groundLayer.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
     - target: {fileID: 1771794197782795959, guid: 9ebd9239cd876e54c9054bf777915c28, type: 3}
       propertyPath: m_Name
       value: Capsule
