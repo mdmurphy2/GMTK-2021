@@ -26,6 +26,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Rigidbody2D rigidbody2D;
     [SerializeField] CapsuleCollider2D capsuleCollider2D;
     [SerializeField] SpriteRenderer spriteRenderer;
+    [SerializeField] Sprite ninjaSprite;
+    [SerializeField] Sprite samuraiSprite;
+
 
     [SerializeField] CameraManager cameraManager;
     public LayerMask groundLayer;
@@ -207,7 +210,7 @@ public class PlayerController : MonoBehaviour
             {
                
                 currentCharacter = Character.Samurai;
-                spriteRenderer.color = Color.white;
+                spriteRenderer.sprite = samuraiSprite;
                 Stats.CurrentCharacter = currentCharacter;
                 timeSinceLastSwap = 0;
                 canSwapCharacters = false;
@@ -215,7 +218,7 @@ public class PlayerController : MonoBehaviour
             else
             {
                 currentCharacter = Character.Ninja;
-                spriteRenderer.color = Color.black;
+                spriteRenderer.sprite = ninjaSprite;
                 Stats.CurrentCharacter = currentCharacter;
                 timeSinceLastSwap = 0;
                 canSwapCharacters = false;
@@ -356,11 +359,11 @@ public class PlayerController : MonoBehaviour
         currentCharacter = startCharacter;
          if (startCharacter == Character.Ninja)
             {
-                spriteRenderer.color = Color.black;
+                spriteRenderer.sprite = ninjaSprite;
             }
             else
             {
-                spriteRenderer.color = Color.white;
+                spriteRenderer.sprite = samuraiSprite;
             }
     }
 
