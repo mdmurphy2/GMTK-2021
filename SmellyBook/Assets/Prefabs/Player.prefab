@@ -145,8 +145,9 @@ MonoBehaviour:
   maxSpeed: 10
   speed: 18
   jumpForce: 31.51
-  dashForce: 30
-  dashTiming: 1
+  dashSpeed: 90
+  dashTiming: 0.25
+  dashStartup: 0.1
   characterSwapDelay: 5
   coyoteTime: 0.2
   coyoteTimer: 0

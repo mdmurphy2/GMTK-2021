@@ -2,25 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class PlayerController : MonoBehaviour
 {
 
     [SerializeField] Rigidbody2D rigidbody2D;
     [SerializeField] CapsuleCollider2D capsuleCollider2D;
     [SerializeField] SpriteRenderer spriteRenderer;
+
+    [SerializeField] CameraManager cameraManager;
     public LayerMask groundLayer;
     public float maxSpeed = 10f;
     public float speed = 5f;
     public float jumpForce = 30f;
-    public float dashForce = 30f;
+    public float dashSpeed = 30f;
+    private Vector2 dashVelocity;
 
     private bool canDoubleJump = true;
 
     private bool canJump = true;
 
     private bool dashing = false;
-    public float dashTiming = 1f;
+    private bool canDash = true;
+    public float dashTiming = 0.1f;
+    public float dashStartup = 0.02f;
+    private bool dashStarting = false;
     private float timeSinceLastDash = 0f;
 
     private Character currentCharacter = Character.Ninja;
@@ -31,7 +36,10 @@ public class PlayerController : MonoBehaviour
     public float coyoteTime = .2f;
     private bool canCoyoteJump = true;
     public float coyoteTimer = 0f;
+    private float gravity;
+    private float drag;
 
+    private readonly float RAD45 = Mathf.Sqrt(2) / 2;
     private enum Character
     {
         Ninja,
@@ -41,13 +49,15 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        gravity = rigidbody2D.gravityScale;
+        drag = rigidbody2D.drag;
     }
 
     private void Update()
     {
         SwitchCharacters();
         CheckJump();
+        CheckDash();
 
     }
 
@@ -55,6 +65,8 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         MoveHorizontal();
+        //ApplyGravity();
+        ApplyDash();
     }
 
     private void MoveHorizontal()
@@ -63,6 +75,23 @@ public class PlayerController : MonoBehaviour
         rigidbody2D.velocity = new Vector2(horizontal * speed, rigidbody2D.velocity.y);
         
     }
+
+    /*private void ApplyGravity() // previous rigidbody gravity was 
+    {
+        if (!IsGrounded() && !IsDashing()) {
+            rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, rigidbody2D.velocity.y - CalculateGravity());
+        } else if (IsGrounded() && !IsDashing()) {
+            rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, 0);
+        }
+    }*/
+
+    /**
+    models gravity artificially to allow for non-quadratic jump curves
+    currently uses linear gravity (v = vt + v0) for a quadratic curve
+    */
+    /*private float CalculateGravity() {
+        return gravity * Time.fixedDeltaTime;
+    }*/
 
     private void SwitchCharacters()
     {
@@ -91,28 +120,49 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    // private void CheckDash() {
-    //     if(dashing) {
-    //         timeSinceLastDash += Time.deltaTime;
-    //         if(timeSinceLastDash >= dashTiming && IsGrounded()) {
-    //             dashing = false;
-    //         }
-    //     }
+    private void CheckDash() {
+        if (currentCharacter == Character.Ninja) {
+            if(dashing) {
+                timeSinceLastDash += Time.deltaTime;
+                if (dashStarting && timeSinceLastDash >= dashStartup) {
+                    dashStarting = false;
+                    cameraManager.DoScreenShake(0.25f, 0.2f);
+                }
+                    
+                if(timeSinceLastDash >= dashTiming) {
+                    dashing = false;
+                    rigidbody2D.velocity *= maxSpeed / dashSpeed;
+                    rigidbody2D.gravityScale = gravity;
+                    rigidbody2D.drag = drag;
+                }
+            } else if (IsGrounded()){
+                canDash = true;
+            }
 
-    //     if(Input.GetButton("Fire2") && !dashing) {
-    //         Debug.Log("DASH");
-    //         dashing = true;
-    //         timeSinceLastDash = 0;
+            if(Input.GetButton("Fire2") && canDash) {
+                Debug.Log("DASH");
+                dashing = true;
+                canDash = false;
+                timeSinceLastDash = 0;
+                rigidbody2D.gravityScale = 0;
+                rigidbody2D.drag = 0;
 
-    //        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                dashStarting = true;
+            
+                dashVelocity = dashSpeed * new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
-    //        Vector2 direction = (mousePosition - new Vector2(transform.position.x, transform.position.y)).normalized;
-    //        Debug.Log(direction);
+                if (Input.GetAxisRaw("Horizontal") != 0 && Input.GetAxisRaw("Vertical") != 0)
+                    dashVelocity *= RAD45;
+            }
+        }
+    }
 
-
-    //         rigidbody2D.AddForce(direction * dashForce, ForceMode2D.Impulse);
-    //     }
-    // }
+    private void ApplyDash() {
+        if (dashStarting)
+            rigidbody2D.velocity = Vector2.zero;
+        else if (dashing)
+            rigidbody2D.velocity = dashVelocity;
+    }
 
     private void CheckJump()
     {
@@ -178,5 +228,10 @@ public class PlayerController : MonoBehaviour
         RaycastHit2D raycastHit = Physics2D.Raycast(capsuleCollider2D.bounds.center, Vector2.down, capsuleCollider2D.bounds.extents.y + extraHeight, groundLayer);
 
         return raycastHit.collider != null;
+    }
+
+    private bool IsDashing()
+    {
+        return false;
     }
 }
