@@ -60,10 +60,8 @@ public class PlayerController : MonoBehaviour
     private void MoveHorizontal()
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
-        if (!dashing)
-        {
-            rigidbody2D.velocity = new Vector2(horizontal * speed, rigidbody2D.velocity.y);
-        }
+        rigidbody2D.velocity = new Vector2(horizontal * speed, rigidbody2D.velocity.y);
+        
     }
 
     private void SwitchCharacters()
@@ -81,12 +79,12 @@ public class PlayerController : MonoBehaviour
             if (currentCharacter == Character.Ninja)
             {
                 currentCharacter = Character.Samurai;
-                spriteRenderer.color = Color.red;
+                //spriteRenderer.color = Color.red;
             }
             else
             {
                 currentCharacter = Character.Ninja;
-                spriteRenderer.color = Color.black;
+                //spriteRenderer.color = Color.black;
             }
         }
 
