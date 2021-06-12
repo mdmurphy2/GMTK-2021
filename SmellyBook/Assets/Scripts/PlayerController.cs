@@ -11,11 +11,20 @@ using UnityEngine.SceneManagement;
 
 public static class Stats {
     private static Character currentCharacter = Character.Ninja;
+    private static int deathCounter = 0;
     public static Character CurrentCharacter {
         get{
             return currentCharacter;
         } set {
             currentCharacter = value;
+        }
+    }
+    public static int DeathCounter {
+        get {
+            return deathCounter;
+        }
+        set {
+            deathCounter = value;
         }
     }
 }
@@ -362,7 +371,7 @@ public class PlayerController : MonoBehaviour
     public void Die() 
     {
         //Do some fadiing
-
+        Stats.DeathCounter = Stats.DeathCounter++;
         //Do Death Stuff
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         
