@@ -76,7 +76,7 @@ GameObject:
   - component: {fileID: 1333288476}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -207,16 +207,16 @@ MonoBehaviour:
     m_Bits: 64
   maxSpeed: 10
   speed: 30
-  jumpForce: 45
+  jumpForce: 50
   dashSpeed: 90
   dashTiming: 0.25
   dashStartup: 0.1
-  characterSwapDelay: 5
+  characterSwapDelay: 0.2
   coyoteTime: 0.2
   coyoteTimer: 0
   rightAttackPoint: {fileID: 261421279}
   downAttackPoint: {fileID: 1597309835}
-  attackRange: 1.42
+  attackRange: 1.9
   enemyLayer:
     serializedVersion: 2
     m_Bits: 128

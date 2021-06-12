@@ -1,6 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
+ public enum Character
+    {
+        Ninja,
+        Samurai,
+    }
+
+public static class Stats {
+    private static Character currentCharacter = Character.Ninja;
+    public static Character CurrentCharacter {
+        get{
+            return currentCharacter;
+        } set {
+            currentCharacter = value;
+        }
+    }
+}
 
 public class PlayerController : MonoBehaviour
 {
@@ -29,7 +47,7 @@ public class PlayerController : MonoBehaviour
     private float timeSinceLastDash = 0f;
 
     private Character currentCharacter = Character.Ninja;
-    public float characterSwapDelay = 5f;
+    public float characterSwapDelay = .2f;
     private bool canSwapCharacters = true;
     private float timeSinceLastSwap = 0f;
 
@@ -40,11 +58,7 @@ public class PlayerController : MonoBehaviour
     private float drag;
 
     private readonly float RAD45 = Mathf.Sqrt(2) / 2;
-    private enum Character
-    {
-        Ninja,
-        Samurai,
-    }
+   
 
 
     public Transform rightAttackPoint;
@@ -54,7 +68,7 @@ public class PlayerController : MonoBehaviour
     public LayerMask enemyLayer;
     private bool attack;
     private bool canAttack = true;
-    private float attackDelay = 1f;
+    private float attackDelay = .3f;
     private float attackTimer = 0f;
 
     // Start is called before the first frame update
@@ -62,6 +76,8 @@ public class PlayerController : MonoBehaviour
     {
         gravity = rigidbody2D.gravityScale;
         drag = rigidbody2D.drag;
+
+        SetCharacter(Stats.CurrentCharacter);
     }
 
     private void Update()
@@ -142,22 +158,15 @@ public class PlayerController : MonoBehaviour
             attack = false;
             //Find Direction of Attack
             float horizontal = Input.GetAxisRaw("Horizontal");
-            float vertical = Input.GetAxisRaw("Vertical");
 
-            Vector2 force = Vector2.zero;
-
+            bool jumpFromAttack = false;
+            
             Collider2D[] hits = new Collider2D[0];
            
-             if(Mathf.Abs(vertical) > 0) { //Up Or Down
-                if(vertical < 0) {
+             if(!IsGrounded()) { //Up Or Down
                     hits = Physics2D.OverlapCircleAll(downAttackPoint.position, attackRange, enemyLayer);
                     Debug.Log("Attack Down");
-                    force = new Vector2(0f, jumpForce);
-                } else if(vertical > 0) {
-                    //hits = Physics2D.OverlapCircleAll(downAttackPoint.position, attackRange, enemyLayer);
-                    Debug.Log("Attack Up");
-                }
-            
+                    jumpFromAttack = true;
             }  else { //Left Or Right
                 if(horizontal < 0) {
                     Debug.Log("Attack Left");
@@ -172,11 +181,13 @@ public class PlayerController : MonoBehaviour
 
             foreach(Collider2D enemy in hits) {
                 enemy.GetComponent<Enemy>().TakeDamage(1);
-                if(force != Vector2.zero) {
+                if(jumpFromAttack) {
+                    jumpFromAttack = false;
                     rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, 0f);
                     rigidbody2D.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
                 }
             }
+            
         }
     }
 
@@ -194,13 +205,20 @@ public class PlayerController : MonoBehaviour
         {
             if (currentCharacter == Character.Ninja)
             {
+               
                 currentCharacter = Character.Samurai;
                 spriteRenderer.color = Color.white;
+                Stats.CurrentCharacter = currentCharacter;
+                timeSinceLastSwap = 0;
+                canSwapCharacters = false;
             }
             else
             {
                 currentCharacter = Character.Ninja;
                 spriteRenderer.color = Color.black;
+                Stats.CurrentCharacter = currentCharacter;
+                timeSinceLastSwap = 0;
+                canSwapCharacters = false;
             }
         }
 
@@ -226,8 +244,11 @@ public class PlayerController : MonoBehaviour
                 canDash = true;
             }
 
-            if(Input.GetButton("Fire2") && canDash) {
+            if(Input.GetButton("Fire1") && canDash) {
                 Debug.Log("DASH");
+                canSwapCharacters = false;
+                timeSinceLastSwap = 0f;
+                
                 dashing = true;
                 canDash = false;
                 timeSinceLastDash = 0;
@@ -253,56 +274,53 @@ public class PlayerController : MonoBehaviour
 
     private void CheckJump()
     {
-        if (currentCharacter == Character.Ninja)
-        {
-            if (Input.GetButtonDown("Jump"))
-            {
-                if (IsGrounded() && Mathf.Approximately(rigidbody2D.velocity.y, 0f))
-                {
-                    Debug.Log("JUMP1");
-                    rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, 0f);
-                    rigidbody2D.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
-                    canDoubleJump = true;
-                }
-                else
-                {
-                    if (canDoubleJump)
-                    {
-                        Debug.Log("JUMP2");
-                        rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, 0f);
-                        rigidbody2D.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
-                        canDoubleJump = false;
-                    }
-                }
+        // if (currentCharacter == Character.Ninja)
+        // {
+        //     if (Input.GetButtonDown("Jump"))
+        //     {
+        //         if (IsGrounded() && Mathf.Approximately(rigidbody2D.velocity.y, 0f))
+        //         {
+        //             Debug.Log("JUMP1");
+        //             rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, 0f);
+        //             rigidbody2D.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+        //             canDoubleJump = true;
+        //         }
+        //         else
+        //         {
+        //             // if (canDoubleJump)
+        //             // {
+        //             //     Debug.Log("JUMP2");
+        //             //     rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, 0f);
+        //             //     rigidbody2D.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+        //             //     canDoubleJump = false;
+        //             // }
+        //         }
+        //     }
+        //     if (IsGrounded())
+        //     {
+        //         canDoubleJump = true;
+        //     }
+        // }
+        if(!IsGrounded()) {
+            coyoteTimer += Time.deltaTime;
+            if(coyoteTimer >= coyoteTime) {
+                canCoyoteJump = false;
             }
-            if (IsGrounded())
+        } else {
+            canCoyoteJump = true;
+            coyoteTimer = 0f;
+        }
+        if (Input.GetButtonDown("Jump"))
+        {
+            if ((IsGrounded() && Mathf.Approximately(rigidbody2D.velocity.y, 0f)) || canCoyoteJump)
             {
-                canDoubleJump = true;
+                Debug.Log("JUMP1");
+                rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, 0f);
+                rigidbody2D.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+                canJump = false;
             }
         }
-
-        else
-        {
-            if(!IsGrounded()) {
-                coyoteTimer += Time.deltaTime;
-                if(coyoteTimer >= coyoteTime) {
-                    canCoyoteJump = false;
-                }
-            } else {
-                canCoyoteJump = true;
-                coyoteTimer = 0f;
-            }
-            if (Input.GetButtonDown("Jump"))
-            {
-                if ((IsGrounded() && Mathf.Approximately(rigidbody2D.velocity.y, 0f)) || canCoyoteJump)
-                {
-                    Debug.Log("JUMP1");
-                    rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, 0f);
-                    rigidbody2D.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
-                    canJump = false;
-                }
-            }
-        }
+        
         
 
 
@@ -321,4 +339,29 @@ public class PlayerController : MonoBehaviour
     {
         return false;
     }
+
+    public void Die() 
+    {
+        //Do some fadiing
+
+        //Do Death Stuff
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        
+    }
+
+    public Character GetCharacter() {
+        return currentCharacter;
+    }
+    public void SetCharacter(Character startCharacter) {
+        currentCharacter = startCharacter;
+         if (startCharacter == Character.Ninja)
+            {
+                spriteRenderer.color = Color.black;
+            }
+            else
+            {
+                spriteRenderer.color = Color.white;
+            }
+    }
+
 }
