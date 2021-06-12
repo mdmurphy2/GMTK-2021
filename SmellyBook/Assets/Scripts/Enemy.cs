@@ -14,11 +14,13 @@ public class Enemy : MonoBehaviour
 
     public int maxHealth = 5;
     private int currentHealth;
+    private CameraManager cameraManager;
 
     private Vector3 pos1, pos2;
     // Start is called before the first frame update
     void Start()
     {
+        cameraManager = GameObject.FindObjectsOfType<CameraManager>()[0];
         currentHealth = maxHealth;
         pos1 = new Vector3(transform.position.x - leftX, transform.position.y - downY, transform.position.z);
         pos2 = new Vector3(transform.position.x + rightX, transform.position.y + upY, transform.position.z);
@@ -44,9 +46,10 @@ public class Enemy : MonoBehaviour
     }
 
     IEnumerator DamageAnimation() {
-        spriteRenderer.color = Color.white;
-        yield return new WaitForSeconds(.1f);
         spriteRenderer.color = Color.red;
+        cameraManager.DoScreenShake(1f, 0.2f);
+        yield return new WaitForSeconds(.1f);
+        spriteRenderer.color = Color.white;
     }
 
     private void OnCollisionEnter2D(Collision2D other) {
