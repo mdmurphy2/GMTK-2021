@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] Sprite ninjaSprite;
     [SerializeField] Sprite samuraiSprite;
+    [SerializeField] Animator animator;
 
 
     [SerializeField] CameraManager cameraManager;
@@ -169,12 +170,14 @@ public class PlayerController : MonoBehaviour
              if(!IsGrounded()) { //Up Or Down
                     hits = Physics2D.OverlapCircleAll(downAttackPoint.position, attackRange, enemyLayer);
                     Debug.Log("Attack Down");
+                    animator.SetTrigger("swingRight");
                     jumpFromAttack = true;
             }  else { //Left Or Right
                 if(horizontal < 0) {
                     Debug.Log("Attack Left");
                 } else { //If not moving attack right
                     hits = Physics2D.OverlapCircleAll(rightAttackPoint.position, attackRange, enemyLayer);
+                    animator.SetTrigger("swingRight");
                     Debug.Log("Attack right");
                 }
                 
@@ -208,7 +211,7 @@ public class PlayerController : MonoBehaviour
         {
             if (currentCharacter == Character.Ninja)
             {
-               
+                SetCharacter(Character.Samurai);
                 currentCharacter = Character.Samurai;
                 spriteRenderer.sprite = samuraiSprite;
                 Stats.CurrentCharacter = currentCharacter;
@@ -217,6 +220,7 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
+                SetCharacter(Character.Ninja);
                 currentCharacter = Character.Ninja;
                 spriteRenderer.sprite = ninjaSprite;
                 Stats.CurrentCharacter = currentCharacter;
@@ -355,15 +359,18 @@ public class PlayerController : MonoBehaviour
     public Character GetCharacter() {
         return currentCharacter;
     }
-    public void SetCharacter(Character startCharacter) {
-        currentCharacter = startCharacter;
-         if (startCharacter == Character.Ninja)
+    public void SetCharacter(Character character) {
+        currentCharacter = character;
+        Stats.CurrentCharacter = character;
+         if (character == Character.Ninja)
             {
-                spriteRenderer.sprite = ninjaSprite;
+                animator.SetBool("isNinja", true);
+                animator.SetBool("isSamurai", false);
             }
             else
             {
-                spriteRenderer.sprite = samuraiSprite;
+                animator.SetBool("isNinja", false);
+                animator.SetBool("isSamurai", true);
             }
     }
 
