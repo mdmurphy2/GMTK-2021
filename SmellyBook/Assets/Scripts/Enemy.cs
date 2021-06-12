@@ -47,8 +47,15 @@ public class Enemy : MonoBehaviour
         spriteRenderer.color = Color.red;
     }
 
+    private void OnCollisionEnter2D(Collision2D other) {
+        if(other.gameObject.tag == "Player") {
+            other.gameObject.GetComponent<PlayerController>().Die();
+        }
+    }
+
     private void Die()
     {
         Debug.Log("Enemy Died");
+        Destroy(this.gameObject);
     }
 }
