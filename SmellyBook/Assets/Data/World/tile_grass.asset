@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9d1514134bc4fbd41bb739b1b9a49231, type: 3}
-  m_Name: tile_test
+  m_Name: tile_grass
   m_EditorClassIdentifier: 
   m_DefaultSprite: {fileID: 2371113511896778162, guid: 4f5038bc3cd7f0941be60c9903241aa6, type: 3}
   m_DefaultGameObject: {fileID: 0}
