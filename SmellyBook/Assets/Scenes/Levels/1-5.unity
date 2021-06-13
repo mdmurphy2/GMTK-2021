@@ -69446,6 +69446,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1968312892299642267, guid: 5d836bf3cc8127348bcb7caa58e98f0c, type: 3}
+      propertyPath: m_Radius
+      value: 1.8733368
+      objectReference: {fileID: 0}
+    - target: {fileID: 1968312892299642267, guid: 5d836bf3cc8127348bcb7caa58e98f0c, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.1289463
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5d836bf3cc8127348bcb7caa58e98f0c, type: 3}
 --- !u!1001 &1522400984
