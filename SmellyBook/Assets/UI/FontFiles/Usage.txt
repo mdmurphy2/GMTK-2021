@@ -1,0 +1,3 @@
+Exo is a "header/logo" font (can be swapped with Exo 2)
+
+Geo is a "body  copy" or smaller font
