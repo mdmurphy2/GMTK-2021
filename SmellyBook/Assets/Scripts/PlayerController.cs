@@ -107,7 +107,7 @@ public class PlayerController : MonoBehaviour
         CheckJump();
         CheckDash();
         CheckAttack();
-
+        CheckAnimatorTriggers();
     }
 
     // Update is called once per frame
@@ -331,35 +331,21 @@ public class PlayerController : MonoBehaviour
             rigidbody2D.velocity = dashVelocity;
     }
 
+    bool lastLandedState = true;
+    private void CheckAnimatorTriggers() {
+        bool grounded = IsGrounded();
+
+        // did the player land?
+        if (grounded && !lastLandedState)
+            animator.SetTrigger("landJump");
+        lastLandedState = grounded;
+
+        // is the player currently falling?
+        animator.SetBool("falling", !grounded && (!canCoyoteJump || !canJump));
+    }
+
     private void CheckJump()
     {
-        // if (currentCharacter == Character.Ninja)
-        // {
-        //     if (Input.GetButtonDown("Jump"))
-        //     {
-        //         if (IsGrounded() && Mathf.Approximately(rigidbody2D.velocity.y, 0f))
-        //         {
-        //             Debug.Log("JUMP1");
-        //             rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, 0f);
-        //             rigidbody2D.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
-        //             canDoubleJump = true;
-        //         }
-        //         else
-        //         {
-        //             // if (canDoubleJump)
-        //             // {
-        //             //     Debug.Log("JUMP2");
-        //             //     rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, 0f);
-        //             //     rigidbody2D.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
-        //             //     canDoubleJump = false;
-        //             // }
-        //         }
-        //     }
-        //     if (IsGrounded())
-        //     {
-        //         canDoubleJump = true;
-        //     }
-        // }
         if(!IsGrounded()) {
             coyoteTimer += Time.deltaTime;
             if(coyoteTimer >= coyoteTime) {
@@ -374,19 +360,12 @@ public class PlayerController : MonoBehaviour
             if ((IsGrounded() && Mathf.Approximately(rigidbody2D.velocity.y, 0f)) || canCoyoteJump)
             {
                 Debug.Log("JUMP1");
-                if(Stats.CurrentCharacter == Character.Samurai) {
-                    animator.SetTrigger("startJumpSamurai");
-                }
+                animator.SetTrigger("startJump");
                 rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, 0f);
                 rigidbody2D.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
                 canJump = false;
             }
         }
-        
-        
-
-
-
     }
 
     private bool IsGrounded()
