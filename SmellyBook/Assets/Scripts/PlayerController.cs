@@ -68,6 +68,8 @@ public class PlayerController : MonoBehaviour
     private bool canSwapCharacters = true;
     private float timeSinceLastSwap = 0f;
 
+    public float swapGravityDelay = 0.2f;
+
     public float coyoteTime = .2f;
     private bool canCoyoteJump = true;
     public float coyoteTimer = 0f;
@@ -230,6 +232,8 @@ public class PlayerController : MonoBehaviour
         if (!canSwapCharacters)
         {
             timeSinceLastSwap += Time.deltaTime;
+            if (timeSinceLastSwap >= swapGravityDelay)
+                rigidbody2D.gravityScale = gravity;
             if (timeSinceLastSwap >= characterSwapDelay)
             {
                 canSwapCharacters = true;
@@ -257,6 +261,8 @@ public class PlayerController : MonoBehaviour
                 timeSinceLastSwap = 0;
                 canSwapCharacters = false;
             }
+            rigidbody2D.velocity = Vector2.zero;
+            rigidbody2D.gravityScale = 0;
         }
 
 
