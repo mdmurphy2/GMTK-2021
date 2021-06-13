@@ -10,6 +10,16 @@ public class IntroScene : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+        int c = SceneManager.sceneCount;
+        for (int i = 0; i < c; i++) {
+            Scene scene = SceneManager.GetSceneAt (i);
+            print (scene.name);
+            if (scene.name != "IntroScene") {
+                SceneManager.UnloadSceneAsync (scene);
+            }
+     
+ }
         StartCoroutine(WaitTime(10f));
     }
 
