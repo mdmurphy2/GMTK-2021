@@ -162,6 +162,7 @@ public class PlayerController : MonoBehaviour
                     Debug.Log("attacking");
                     canAttack = false;
                     attack = true;
+                    skipFrame = true;
                     attackTimer = 0f;
                 }
             }
@@ -178,8 +179,13 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    private bool skipFrame = true;
     private void ApplyAttack() {
         if(attack) {
+            if(skipFrame) {
+                skipFrame = false;
+                return;
+            }
             attack = false;
             //Find Direction of Attack
             float horizontal = Input.GetAxisRaw("Horizontal");
@@ -189,9 +195,10 @@ public class PlayerController : MonoBehaviour
             Collider2D[] hits = new Collider2D[0];
            
              if(!IsGrounded()) { //Up Or Down
+                    animator.SetTrigger("swingDown");
                     hits = Physics2D.OverlapCircleAll(downAttackPoint.position, attackRange, enemyLayer);
                     Debug.Log("Attack Down");
-                    animator.SetTrigger("swingDown");
+                    
                     jumpFromAttack = true;
             }  else { //Left Or Right
                 if(horizontal < 0) {
