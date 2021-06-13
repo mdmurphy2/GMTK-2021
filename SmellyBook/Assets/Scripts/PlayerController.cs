@@ -253,6 +253,20 @@ public class PlayerController : MonoBehaviour
     }
 
     private void CheckDash() {
+        if(currentCharacter == Character.Samurai) {
+            if(dashing) {
+                timeSinceLastDash += Time.deltaTime;
+                if(timeSinceLastDash >= dashTiming) {
+                    dashing = false;
+                    dashStarting = false;
+                    canDash = true;
+                }
+            } else if(IsGrounded()) {
+            dashing = false;
+            dashStarting = false;
+            canDash = true;
+            }
+        } 
         if (currentCharacter == Character.Ninja) {
             if(dashing) {
                 timeSinceLastDash += Time.deltaTime;
