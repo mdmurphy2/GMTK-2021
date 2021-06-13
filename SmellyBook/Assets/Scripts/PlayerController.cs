@@ -39,6 +39,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Sprite samuraiSprite;
     [SerializeField] Animator animator;
     [SerializeField] GameObject swapPrefab;
+    [SerializeField] GameObject dashPrefab;
+
 
 
     [SerializeField] CameraManager cameraManager;
@@ -59,6 +61,7 @@ public class PlayerController : MonoBehaviour
     public float dashStartup = 0.02f;
     private bool dashStarting = false;
     private float timeSinceLastDash = 0f;
+    private float dashEffectTiming = 0f;
 
     private Character currentCharacter = Character.Ninja;
     public float characterSwapDelay = 2f;
@@ -308,6 +311,7 @@ public class PlayerController : MonoBehaviour
     }
 
     private void ApplyDash() {
+        AnimateDash();
         if (dashStarting)
             rigidbody2D.velocity = Vector2.zero;
         else if (dashing)
@@ -418,6 +422,29 @@ public class PlayerController : MonoBehaviour
         Vector3 pos=transform.position;
         Quaternion rotation=transform.rotation;
         Instantiate(swapPrefab, pos, rotation);
+    }
+
+    private void AnimateDash() {
+        if(dashing || dashStarting) {
+            dashEffectTiming += Time.deltaTime;
+            if(dashEffectTiming > .05f) {
+                Vector3 pos=transform.position;
+                Quaternion rotation=transform.rotation;
+                GameObject dash = Instantiate(dashPrefab, pos, rotation);
+                float horizontal = Input.GetAxisRaw("Horizontal");
+                if(horizontal < -0.1f) {
+                    dash.transform.localScale = new Vector3(-1,1,1);
+                } else if (horizontal > .1f) {
+                    dash.transform.localScale = new Vector3(1,1,1);
+                } else {
+                    dash.SetActive(false);
+                }
+                dashEffectTiming = 0f;
+            }
+        } else {
+            dashEffectTiming = 0f;
+        }
+       
     }
 
 }
