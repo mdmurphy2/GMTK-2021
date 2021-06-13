@@ -445,7 +445,7 @@ public class PlayerController : MonoBehaviour
                 Quaternion rotation=transform.rotation;
                 GameObject dash = Instantiate(dashPrefab, pos, rotation);
                 float horizontal = Input.GetAxisRaw("Horizontal");
-                if(horizontal < -0.1f || !IsGrounded()) {
+                if(horizontal < -0.1f) {
                     dash.transform.localScale = new Vector3(-1,1,1);
                 } else if (horizontal > .1f || !IsGrounded()) {
                     dash.transform.localScale = new Vector3(1,1,1);
