@@ -11,7 +11,7 @@ public class IntroScene : MonoBehaviour
     void Start()
     {
 
-        StartCoroutine(WaitTime(15f));
+        StartCoroutine(WaitTime(20f));
     }
 
     // Update is called once per frame

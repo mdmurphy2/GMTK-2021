@@ -14,6 +14,7 @@ public class MainMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+       transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x, transform.position.y, transform.position.z + 3), .2f * Time.deltaTime);
        if(Input.GetButtonDown("Jump") || Input.GetButtonDown("Fire1")) {
             StopAllCoroutines();
             SceneManager.LoadScene("IntroScene");
