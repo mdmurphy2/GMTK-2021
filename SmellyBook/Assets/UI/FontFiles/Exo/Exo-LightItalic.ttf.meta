@@ -1,2 +1,26 @@
 fileFormatVersion: 2
+<<<<<<< Updated upstream
 guid: 9e11221c1a89e4a48a43d750d8b20a6f
+=======
+guid: 712dcffe95b9e5046a8acefabc4fd816
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Exo
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 10480fac2db72394b85cfdef6a2e1998, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+>>>>>>> Stashed changes

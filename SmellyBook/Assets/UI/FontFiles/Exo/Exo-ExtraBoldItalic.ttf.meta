@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< Updated upstream
 guid: d1827073a6cdbf048b63558391d4c24f
+=======
+guid: 85f213bdc7b43704c8b1267ccd753800
+>>>>>>> Stashed changes
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -11,6 +15,7 @@ TrueTypeFontImporter:
   fontNames:
   - Exo
   fallbackFontReferences:
+<<<<<<< Updated upstream
   - {fileID: 12800000, guid: 9e11221c1a89e4a48a43d750d8b20a6f, type: 3}
   - {fileID: 12800000, guid: 35a5c42b982925c4eb87d15a4c23e7d9, type: 3}
   - {fileID: 12800000, guid: fffb8184678f3aa46a19c67de240fd07, type: 3}
@@ -28,6 +33,13 @@ TrueTypeFontImporter:
   - {fileID: 12800000, guid: 1a172d85181178047937e8d32aa20959, type: 3}
   - {fileID: 12800000, guid: a337e68205bc97240a29a5ab57e9bde7, type: 3}
   - {fileID: 12800000, guid: 05afd6f139c4c6347808551930cfc8f3, type: 3}
+=======
+  - {fileID: 12800000, guid: a206fb2179f4e3b4b92c26060f4978c3, type: 3}
+  - {fileID: 12800000, guid: 52ddbe28393d8414eadc7a45ee30795e, type: 3}
+  - {fileID: 12800000, guid: 712dcffe95b9e5046a8acefabc4fd816, type: 3}
+  - {fileID: 12800000, guid: 25a421f4d91203648bbf26b2741af2e0, type: 3}
+  - {fileID: 12800000, guid: 10480fac2db72394b85cfdef6a2e1998, type: 3}
+>>>>>>> Stashed changes
   customCharacters: 
   fontRenderingMode: 0
   ascentCalculationMode: 1
