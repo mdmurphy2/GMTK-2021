@@ -205,6 +205,7 @@ MonoBehaviour:
   ninjaSprite: {fileID: 21300000, guid: 8bba98c2682409e4fa56a0783addcb55, type: 3}
   samuraiSprite: {fileID: 21300000, guid: bdb622526d275ee4d8b94fdc07139092, type: 3}
   animator: {fileID: 216014521}
+  swapPrefab: {fileID: 5549615076407968297, guid: 258b67dc87233524e8cf54c3d4f87702, type: 3}
   cameraManager: {fileID: 0}
   groundLayer:
     serializedVersion: 2
@@ -215,7 +216,7 @@ MonoBehaviour:
   dashSpeed: 90
   dashTiming: 0.25
   dashStartup: 0.1
-  characterSwapDelay: 0.1
+  characterSwapDelay: 1
   coyoteTime: 0.2
   coyoteTimer: 0
   rightAttackPoint: {fileID: 261421279}

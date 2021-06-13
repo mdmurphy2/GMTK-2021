@@ -38,6 +38,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Sprite ninjaSprite;
     [SerializeField] Sprite samuraiSprite;
     [SerializeField] Animator animator;
+    [SerializeField] GameObject swapPrefab;
 
 
     [SerializeField] CameraManager cameraManager;
@@ -60,7 +61,7 @@ public class PlayerController : MonoBehaviour
     private float timeSinceLastDash = 0f;
 
     private Character currentCharacter = Character.Ninja;
-    public float characterSwapDelay = .2f;
+    public float characterSwapDelay = 2f;
     private bool canSwapCharacters = true;
     private float timeSinceLastSwap = 0f;
 
@@ -229,6 +230,7 @@ public class PlayerController : MonoBehaviour
             if (currentCharacter == Character.Ninja)
             {
                 SetCharacter(Character.Samurai);
+                AnimateSwap();
                 currentCharacter = Character.Samurai;
                 spriteRenderer.sprite = samuraiSprite;
                 Stats.CurrentCharacter = currentCharacter;
@@ -238,6 +240,7 @@ public class PlayerController : MonoBehaviour
             else
             {
                 SetCharacter(Character.Ninja);
+                AnimateSwap();
                 currentCharacter = Character.Ninja;
                 spriteRenderer.sprite = ninjaSprite;
                 Stats.CurrentCharacter = currentCharacter;
@@ -272,7 +275,7 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("DASH");
                 animator.SetTrigger("dash");
                 canSwapCharacters = false;
-                timeSinceLastSwap = 0f;
+                timeSinceLastSwap = characterSwapDelay - .1f;
                 
                 dashing = true;
                 canDash = false;
@@ -383,6 +386,7 @@ public class PlayerController : MonoBehaviour
     public void SetCharacter(Character character) {
         currentCharacter = character;
         Stats.CurrentCharacter = character;
+       
          if (character == Character.Ninja)
             {
                 animator.SetBool("isNinja", true);
@@ -393,6 +397,13 @@ public class PlayerController : MonoBehaviour
                 animator.SetBool("isNinja", false);
                 animator.SetBool("isSamurai", true);
             }
+    }
+
+    private void AnimateSwap() {
+         //Summor Swap
+        Vector3 pos=transform.position;
+        Quaternion rotation=transform.rotation;
+        Instantiate(swapPrefab, pos, rotation);
     }
 
 }
