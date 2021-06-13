@@ -6,51 +6,29 @@ using UnityEngine.SceneManagement;
 
 public class IntroScene : MonoBehaviour
 {
-    [SerializeField] TextMeshProUGUI text;
+    [SerializeField] Transform box;
     // Start is called before the first frame update
     void Start()
     {
 
-        int c = SceneManager.sceneCount;
-        for (int i = 0; i < c; i++) {
-            Scene scene = SceneManager.GetSceneAt (i);
-            print (scene.name);
-            if (scene.name != "IntroScene") {
-                SceneManager.UnloadSceneAsync (scene);
-            }
-     
- }
-        StartCoroutine(WaitTime(10f));
+        StartCoroutine(WaitTime(15f));
     }
 
     // Update is called once per frame
     void Update()
     {
+       box.transform.position = Vector3.MoveTowards(box.transform.position, new Vector3(box.transform.position.x + 190, box.transform.position.y, box.transform.position.z), 5 * Time.deltaTime);
        transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x + 190, transform.position.y, transform.position.z), 5 * Time.deltaTime);
+       if(Input.GetButtonDown("Jump")) {
+           StopAllCoroutines();
+            SceneManager.LoadScene("1-1");
+       }
     }
 
-      public IEnumerator FadeTextToFullAlpha(float t)
-    {
-        text.color = new Color(text.color.r, text.color.g, text.color.b, 0);
-        while (text.color.a < 1.0f)
-        {
-            text.color = new Color(text.color.r, text.color.g, text.color.b, text.color.a + (Time.deltaTime / t));
-            yield return null;
-        }
-    }
 
     IEnumerator WaitTime(float t) {
         yield return new WaitForSeconds(t);
         SceneManager.LoadScene("1-1");
     }
  
-    public IEnumerator FadeTextToZeroAlpha(float t)
-    {
-        text.color = new Color(text.color.r, text.color.g, text.color.b, 1);
-        while (text.color.a > 0.0f)
-        {
-            text.color = new Color(text.color.r, text.color.g, text.color.b, text.color.a - (Time.deltaTime / t));
-            yield return null;
-        }
-    }
 }
